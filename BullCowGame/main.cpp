@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "main.h"
+#include "FBullCowGame.h"
 
 using namespace std;
 
@@ -16,13 +16,11 @@ bool AskToPlayAgain();
 
 int main( int argc, char* argv[])
 {
-	bool PlayAgain;
 	do
 	{
 		PrintIntro();
 		PlayGame();
-		PlayAgain = AskToPlayAgain();
-	} while (PlayAgain);
+	} while (AskToPlayAgain());	// (Response[0] == 'y') || (Response[0] == 'Y');
 
 	return 0;
 }
