@@ -1,15 +1,19 @@
+/* 
+This is the console executable, that makes use of Bull & Cows class.
+This acts as the viev in a MVC pattern, and is responsible for
+user interaction. For game logic see FBullCowGame class.
+*/
+
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
-#define WORD_LENGTH		5
-#define CHANCES		5
-
-int main(int argc, char * argv[]);
+using FString = std::string;
+using int32 = int;
 
 void PrintIntro();
 void PlayGame();
-std::string GetGuess();
+FString GetGuess();
 bool AskToPlayAgain();
 
 FBullCowGame BCGame;	// Instance of game
@@ -27,29 +31,40 @@ int main( int argc, char* argv[])
 
 void PrintIntro()
 {
+	constexpr int32 WORD_LENGTH = 5;
 	std::cout << "Welcome to Bulls and Cows\n";
 	std::cout << "Can you guess the " << WORD_LENGTH << " letter isogram I am thinking of?\n";
+	// TODO Add some ASCII graphics of bull nad cow. 
 }
 
 void PlayGame()
 {
 	BCGame.Reset();
-	int MaxTries = BCGame.GetMaxTries();
+	int32 MaxTries = BCGame.GetMaxTries();
 
 	// loop for the number of terms asking for message. 
-	for (int i = 0; i < MaxTries; i++)
+	// TODO change from FOR to WHILE loop, once we are validating tries.
+	for (int32 i = 0; i < MaxTries; i++)
 	{
-		std::string Guess = GetGuess();
-		std::cout << "Your guess is: " << Guess << std::endl;
+		FString Guess = GetGuess();	// TODO make loop checking valid guesses
+		
+		//Submit Valid guess to the game.
+		FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
+		//Print number of bulls and cows. 
+		std::cout << "Bulls = " << BullCowCount.Bulls;
+		std::cout << ". Cows = " << BullCowCount.Cows << std::endl;
+
 	}
+
+	// TODO Summarize game here. 
 }
 
-std::string GetGuess()
+FString GetGuess()
 {	
 	//Get Guess from the player.
 	std::cout << "\nTry " << BCGame.GetCurrentTry();
 	std::cout << ". Type in Your guess: ";
-	std::string Guess = "";
+	FString Guess = "";
 	std::getline(std::cin, Guess);
 	return Guess;
 }
@@ -57,7 +72,7 @@ std::string GetGuess()
 bool AskToPlayAgain()
 {
 	std::cout << "\nDo You want to play again? :) [y/n]    ";
-	std::string Response = "";
+	FString Response = "";
 	std::getline(std::cin, Response);
 
 	return (Response[0] == 'y') || (Response[0] == 'Y');
