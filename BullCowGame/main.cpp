@@ -12,6 +12,8 @@ void PlayGame();
 std::string GetGuess();
 bool AskToPlayAgain();
 
+FBullCowGame BCGame;	// Instance of game
+
 int main( int argc, char* argv[])
 {
 	do
@@ -31,8 +33,11 @@ void PrintIntro()
 
 void PlayGame()
 {
+	BCGame.Reset();
+	int MaxTries = BCGame.GetMaxTries();
+
 	// loop for the number of terms asking for message. 
-	for (int i = 0; i < CHANCES; i++)
+	for (int i = 0; i < MaxTries; i++)
 	{
 		std::string Guess = GetGuess();
 		std::cout << "Your guess is: " << Guess << std::endl;
@@ -40,9 +45,10 @@ void PlayGame()
 }
 
 std::string GetGuess()
-{
+{	
 	//Get Guess from the player.
-	std::cout << "\nType in Your guess: ";
+	std::cout << "\nTry " << BCGame.GetCurrentTry();
+	std::cout << ". Type in Your guess: ";
 	std::string Guess = "";
 	std::getline(std::cin, Guess);
 	return Guess;

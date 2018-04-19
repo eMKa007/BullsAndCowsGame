@@ -4,11 +4,13 @@
 
 class FBullCowGame{
 public:
+	FBullCowGame();	//constructor, without any parameters. 
+
+	int GetMaxTries() const;
+	int GetCurrentTry() const;
+	bool IsGameWon() const;
 	
 	void Reset();
-	int GetMaxTries();
-	int GetCurrentTry();
-	bool IsGameWon();
 	bool CheckGuess(std::string Guess);
 
 
