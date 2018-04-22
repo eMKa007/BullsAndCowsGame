@@ -10,16 +10,28 @@ struct FBullCowCount //All variables initialized to 0.
 	int32 Cows = 0;
 };
 
-class FBullCowGame{
+enum class EGuessStatus
+{
+	INVALID_STATUS,
+	OK,
+	Not_Isogram,
+	Wrong_Length,
+	Not_Lowercase,
+};
+
+class FBullCowGame
+{
 public:
 	FBullCowGame();	//constructor, without any parameters. 
 
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
+	int32 GetHiddenWordLenght() const;
 	bool IsGameWon() const;
+	EGuessStatus CheckGuessValidity(FString Guess) const ;
 	
 	void Reset();					// TODO, make a more rich return value
-	bool CheckGuess(FString Guess);
+	
 	FBullCowCount SubmitGuess(FString Guess);
 
 private:
