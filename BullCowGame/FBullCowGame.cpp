@@ -7,8 +7,8 @@ void FBullCowGame::Reset()
 
 	const FString HIDDEN_WORD = "planet";
 	MyHiddenWord = HIDDEN_WORD;
-
 	MyCurrentTry = 1;
+	bGameIsWon = false;
 	return;
 }
 //Constructor:
@@ -17,17 +17,14 @@ FBullCowGame::FBullCowGame() { Reset(); }
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const {	return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLenght() const { return MyHiddenWord.length(); }
+bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
 
-bool FBullCowGame::IsGameWon() const
-{
-	return false;
-}
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	if( false )										// if the guess is not an isogram, 
+	if( false )										//  TODO write function
 		return EGuessStatus::Not_Isogram;
-	else if( false )								// if the guess is not all lowercase
+	else if( false )								// TODO write function
 		return EGuessStatus::Not_Lowercase;
 	else if( Guess.length() != GetHiddenWordLenght() )	// if the guess length is wrong
 		return EGuessStatus::Wrong_Length;
@@ -37,20 +34,17 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 }
 
 // Receives a VALID guess, increments turn, and returns count.
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
-	//Increment the Turn #
 	MyCurrentTry++;
-
-	// Setup a return variable
 	FBullCowCount BullCowCount;
+	int32 WordLength = MyHiddenWord.length();
 
 	// loop through all letters in the guess
-	int32 MyHiddenWordLength = MyHiddenWord.length();
-	for( int32 MHWChar =0; MHWChar< MyHiddenWordLength; MHWChar++ )	// MHWChar- MyHiddenWordChar
+	for( int32 MHWChar =0; MHWChar< WordLength; MHWChar++ )	// MHWChar- MyHiddenWordChar
 	{
 		// compare letters against the hidden word
-		for (int32 GChar = 0; GChar < MyHiddenWordLength; GChar++)	// GChar- GuessChar
+		for (int32 GChar = 0; GChar < WordLength; GChar++)	// GChar- GuessChar
 		{
 			// if they match
 			if(Guess[GChar] == MyHiddenWord[MHWChar])
@@ -65,5 +59,23 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
 			}
 		}
 	}
+
+	if( BullCowCount.Bulls == WordLength ) 
+		bGameIsWon = true; 
+	else 
+		bGameIsWon = false;
+
 	return BullCowCount;
+}
+
+void FBullCowGame::PrintGameSummary()
+{
+	if( bGameIsWon )
+	{
+		printf("Well done. You got it!\n", MyHiddenWord);
+	}
+	else
+	{
+		printf("Mayby next time :) Keep going!\n");
+	}
 }

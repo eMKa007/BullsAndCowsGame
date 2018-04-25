@@ -19,23 +19,34 @@ enum class EGuessStatus
 	Not_Lowercase,
 };
 
+enum class EGuessStatusMoja
+{
+	INVALID_STATUS,
+	OK,
+	Not_Isogram,
+	Wrong_Length,
+	Not_Lowercase,
+};
+
 class FBullCowGame
 {
 public:
 	FBullCowGame();	//constructor, without any parameters. 
 
+	bool IsGameWon() const;
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLenght() const;
-	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString Guess) const ;
 	
 	void Reset();					// TODO, make a more rich return value
 	
-	FBullCowCount SubmitGuess(FString Guess);
+	FBullCowCount SubmitValidGuess(FString Guess);
+	void PrintGameSummary();
 
 private:
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bGameIsWon;
 };
