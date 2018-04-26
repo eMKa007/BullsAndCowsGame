@@ -1,4 +1,6 @@
 #include "FBullCowGame.h"
+#include <map>
+#define TMap std::map
 
 void FBullCowGame::Reset()
 {
@@ -22,7 +24,7 @@ bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	if( false )										//  TODO write function
+	if( !IsIsogram(Guess) )
 		return EGuessStatus::Not_Isogram;
 	else if( false )								// TODO write function
 		return EGuessStatus::Not_Lowercase;
@@ -72,10 +74,29 @@ void FBullCowGame::PrintGameSummary()
 {
 	if( bGameIsWon )
 	{
-		printf("Well done. You got it!\n", MyHiddenWord);
+		printf("Well done. You got it!\n");
 	}
 	else
 	{
 		printf("Mayby next time :) Keep going!\n");
 	}
+}
+
+bool FBullCowGame::IsIsogram(FString Word) const
+{
+	//Treat 0 or 1 letter word as isogram 
+	if( Word.length() <= 1 ) { return true; }
+
+	TMap<char, bool> LetterSeen;	// Setup our map
+
+	for( auto Letter : Word)	// Check all letters in a loop. 
+	{
+		Letter = tolower(Letter);
+		
+		if( LetterSeen[Letter] ) // Set true to map for every new letter in guess.
+			return false;
+		else
+			LetterSeen[Letter] = true;
+	}
+	return true;
 }
