@@ -26,14 +26,37 @@ int main( int argc, char* argv[])
 		PlayGame();
 	} while (AskToPlayAgain());	// (Response[0] == 'y') || (Response[0] == 'Y');
 
+	std::cout << "\nFarewell Cowboy #Moo\n\n";
+
 	return 0;
 }
 
 void PrintIntro()
 {
-	std::cout << "\n\nWelcome to Bulls and Cows\n";
-	std::cout << "Can you guess the " << BCGame.GetHiddenWordLenght() << " letter isogram I am thinking of?\n";
-	// TODO Add some ASCII graphics of bull nad cow. 
+	std::cout << " .========================================================================.\n";
+	std::cout << "//                  Welcome in Bulls & Cows Word Game                     \\\\\n";
+	std::cout << "||                                    _ _ _ _ _ _ _ _ _                   ||\n";
+	std::cout << "||                   __n__n__       /  Can you guess   \\                  ||\n";
+	std::cout << "||            .------`-\\00/-' : : :/     what word am I \\                 ||\n";
+	std::cout << "||           /  ##  ## (oo)        \\  thinking of? #Moo /                 ||\n";
+	std::cout << "||          / \\## __   ./           \\ * * * * * * * * */                  ||\n";
+	std::cout << "||             |//YY \\|/                           Betty                  ||\n";
+	std::cout << "||             |||   |||                                                  ||\n";
+	std::cout << "||                                                                        ||\n";
+	std::cout << "|} - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  {|\n";
+	std::cout << "||                                                                        ||\n";
+	std::cout << "||         Can You find out what is Betty thinking about?                 ||\n";
+	std::cout << "||         Rules are simple:                                              ||\n";
+	std::cout << "||            * You have 5 chances to guess the word.                     ||\n";
+	std::cout << "||            * Word is 6 letters long.                                   ||\n";
+	std::cout << "||            * Enter isogram word ( word without repeating letter ).     ||\n";
+	std::cout << "||            * Enter all lowercase word.                                 ||\n";
+	std::cout << "||                                                                        ||\n";
+	std::cout << "|} - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  {|\n";
+	std::cout << "\\\\                        G O O D   L U C K ! ! !                         //\n";
+	std::cout << " * ====================================================================== *\n";
+	
+	return;
 }
 
 void PlayGame()
@@ -68,7 +91,7 @@ FString GetValidGuess()
 	do
 	{
 		//Get Guess from the player.
-		std::cout << "\nTry " << BCGame.GetCurrentTry();
+		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries();
 		std::cout << ". Type in Your guess: ";
 		
 		std::getline(std::cin, Guess);
@@ -89,7 +112,6 @@ FString GetValidGuess()
 			default: 
 				break;		// We assumeing guess is valid.
 		}
-		std::cout << std::endl;
 	} while (Status != EGuessStatus::OK);
 	
 	return Guess;

@@ -34,21 +34,23 @@ public:
 	FBullCowGame();	//constructor, without any parameters. 
 
 	bool IsGameWon() const;
-	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLenght() const;
 	EGuessStatus CheckGuessValidity(FString Guess) const ;
 	
+	int32 GetMaxTries() const;
+
 	void Reset();					// TODO, make a more rich return value
 	
 	FBullCowCount SubmitValidGuess(FString Guess);
 	void PrintGameSummary();
 
 private:
+	int32 UserDefinedWordLength;
 	int32 MyCurrentTry;
-	int32 MyMaxTries;
 	FString MyHiddenWord;
 	bool bGameIsWon;
 
 	bool IsIsogram(FString Word) const;
+	bool IsLowercase(FString Word) const;
 };
