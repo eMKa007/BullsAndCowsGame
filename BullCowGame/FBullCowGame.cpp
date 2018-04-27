@@ -24,6 +24,7 @@ void FBullCowGame::SetUserWordLength()
 	int32 UserWordLength;
 	do
 	{
+		// Have to check input. Only digits are allowed. RegExp?
 		std::cout << "\nSet word length  < 3 - 10 >: ";
 		std::cin >> UserWordLength;
 
