@@ -52,6 +52,8 @@ void PrintIntro()
 	std::cout << "||            * Enter isogram word ( word without repeating letter ).     ||\n";
 	std::cout << "||            * Enter all lowercase word.                                 ||\n";
 	std::cout << "||                                                                        ||\n";
+	std::cout << "||   HINT: To change hidden word length type in:                          ||\n";
+	std::cout << "||                                change word <number_of_characters>      ||\n";
 	std::cout << "|} - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  {|\n";
 	std::cout << "\\\\                        G O O D   L U C K ! ! !                         //\n";
 	std::cout << " * ====================================================================== *\n";
@@ -62,10 +64,9 @@ void PrintIntro()
 void PlayGame()
 {
 	BCGame.Reset();
-	int32 MaxTries = BCGame.GetMaxTries();
+	BCGame.SetUserWordLength();
 
-	// loop asking for guesses while game is NOT won
-	// and there are still tries remaining
+	int32 MaxTries = BCGame.GetMaxTries(BCGame.GetUserWordLength());
 
 	while( !BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries )
 	{
@@ -91,7 +92,7 @@ FString GetValidGuess()
 	do
 	{
 		//Get Guess from the player.
-		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries();
+		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries(BCGame.GetUserWordLength());
 		std::cout << ". Type in Your guess: ";
 		
 		std::getline(std::cin, Guess);

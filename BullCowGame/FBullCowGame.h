@@ -38,7 +38,10 @@ public:
 	int32 GetHiddenWordLenght() const;
 	EGuessStatus CheckGuessValidity(FString Guess) const ;
 	
-	int32 GetMaxTries() const;
+	int32 GetMaxTries(int32 WordLength) const;
+
+	void SetUserWordLength();
+	int32 GetUserWordLength() const;
 
 	void Reset();					// TODO, make a more rich return value
 	

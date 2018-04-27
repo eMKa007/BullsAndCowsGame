@@ -1,4 +1,5 @@
 #include "FBullCowGame.h"
+#include <iostream>
 #include <map>
 #define TMap std::map
 
@@ -8,14 +9,38 @@ int32 FBullCowGame::GetCurrentTry() const {	return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLenght() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
 
-int32 FBullCowGame::GetMaxTries() const 
+int32 FBullCowGame::GetMaxTries(int32 WordLength) const 
 {
-	TMap<int32, int32> WordLengthToMaxTries { {3,4}, {4,5}, {5,6}, {6,7} };
+	TMap<int32, int32> WordLengthToMaxTries { {3,3}, {4,5}, {5,5}, {6,6}, {7,8}, {8,10}, {9,12}, {10,15} };
 						//			WordLength ^  ^
 									//	          MaxTries
-	return WordLengthToMaxTries[MyHiddenWord.length()];
+	return WordLengthToMaxTries[WordLength];
 
 
+}
+
+void FBullCowGame::SetUserWordLength()
+{
+	int32 UserWordLength;
+	do
+	{
+		std::cout << "\nSet word length  < 3 - 10 >: ";
+		std::cin >> UserWordLength;
+
+		if ((UserWordLength > 2) && (UserWordLength < 11))
+		{
+			UserDefinedWordLength = UserWordLength;
+			return;
+		}
+
+		std::cout << "\nPlease enter number between 3 and 10. \n\n";
+	} while (true);
+	
+}
+
+int32 FBullCowGame::GetUserWordLength() const
+{
+	return UserDefinedWordLength;
 }
 
 void FBullCowGame::Reset()
