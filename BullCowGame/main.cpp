@@ -4,10 +4,13 @@ This acts as the viev in a MVC pattern, and is responsible for
 user interaction. For game logic see FBullCowGame class.
 */
 
+#pragma once
+
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
+// To make syntax Unreal friendly
 using FString = std::string;
 using int32 = int;
 
@@ -24,11 +27,11 @@ int main( int argc, char* argv[])
 	{
 		PrintIntro();
 		PlayGame();
-	} while (AskToPlayAgain());	// (Response[0] == 'y') || (Response[0] == 'Y');
+	} while (AskToPlayAgain());
 
 	std::cout << "\nFarewell Cowboy #Moo\n\n";
 
-	return 0;
+	return 0; //exit the application
 }
 
 void PrintIntro()
@@ -59,13 +62,11 @@ void PrintIntro()
 	return;
 }
 
+// plays a single game to complition.
 void PlayGame()
 {
 	BCGame.Reset();
 	int32 MaxTries = BCGame.GetMaxTries();
-
-	// loop asking for guesses while game is NOT won
-	// and there are still tries remaining
 
 	while( !BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries )
 	{
@@ -79,18 +80,15 @@ void PlayGame()
 	}
 	
 	BCGame.PrintGameSummary();
-
 	return;
 }
 
-// Loop continually until user gives a valid guess.
 FString GetValidGuess()
 {	
 	EGuessStatus Status = EGuessStatus::INVALID_STATUS;
 	FString Guess = "";
 	do
 	{
-		//Get Guess from the player.
 		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries();
 		std::cout << ". Type in Your guess: ";
 		
@@ -110,10 +108,9 @@ FString GetValidGuess()
 				std::cout << "Please enter an all lowercase word.\n";
 				break;
 			default: 
-				break;		// We assumeing guess is valid.
+				break;
 		}
 	} while (Status != EGuessStatus::OK);
-	
 	return Guess;
 }
 
@@ -125,4 +122,3 @@ bool AskToPlayAgain()
 
 	return (Response[0] == 'y') || (Response[0] == 'Y');
 }
-
