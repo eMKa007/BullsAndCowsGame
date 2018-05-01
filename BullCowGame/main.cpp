@@ -31,7 +31,8 @@ int main( int argc, char* argv[])
 	} while (AskToPlayAgain());
 
 	std::cout << "\nFarewell Cowboy #Moo\n\n";
-	return 0;
+
+	return 0; //exit the application
 }
 
 void PrintIntro()

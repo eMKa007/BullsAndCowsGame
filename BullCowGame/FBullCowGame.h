@@ -1,11 +1,4 @@
 /*
-This file contains declarations of:
-	- FBullCowCount structure (used to count down bulls and cows)
-	- EGuessStatus enum class (used to check guess validity)
-	- FBullCowGame class (instance of game)
-*/
-
-/*
 The game logic (no view code or direct user interaction)
 The game is a simple guess the word based on Mastermind.
 This file include declarations of:

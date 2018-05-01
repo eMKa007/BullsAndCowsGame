@@ -59,9 +59,23 @@ void FBullCowGame::SerGameDifficulty()
 
 void FBullCowGame::Reset()
 {
-	const FString EasyHiddenWord[] = { "agio", "aims", "airs", "amir", "amis", "arms", "gams", "gars", "giro", "goas", "gram", "grim", "magi", "mags", "mair", "mars", "migs", "mirs",  "miso", "moas", "mogs", "mora", "mors", "oars", "ogam", "osar", "ragi", "rags", "rami", "rams", "rias", "rigs", "rims", "roam", "roms", "sago", "sari", "sima", "smog", "soar", "soma", "sora", "sori" };
-	const FString MediumHiddenWord[] = { "agios", "agism", "amigo", "amirs", "giros", "gismo", "grams", "imago", "mairs", "moira", "moras", "ogams", "ragis", "roams", "sigma", "simar", "dater", "dates", "datos", "datum", "daube", "daubs", "dauby", "daunt", "dauts", "daven", "davit", "dawen", "dawks", "dawns", "dawts", "dazes", "deair", "deals", "dealt", "deans", "dears", "deary", "deash", "death", "debar", "debit", "debts", "debug", "debut", "decaf", "decal", "decay", "decks", "decor", "decos", "decoy", "decry", "defat", "defis", "defog", "degas", "degum", "deify", "deign", "deils", "deism", "deist", "deity", "delay", "delfs", "delft", "delis", "delta", "delts", "demit" };
-	const FString HardHiddenWord[] = { "gambes", "gambir", "gambit", "gamble", "gambol", "gamely", "gamers", "gamest", "amier", "gamily", "gamine", "gamins", "gamuts", "gander", "ganefs", "ganevs", "ganofs", "ganoid", "gantry", "gaoled", "keblah", "kefirs", "kelims", "keloid", "kelson", "kelvin", "kenafs", "kendos", "kermis", "ketols", "kevils", "keying", "keypad", "paired", "palest", "palets", "palier", "paling", "palish", "palmed", "palmer", "palter", "paltry", "pander", "pandit", "panels", "panfry", "panful", "panged", "panics", "panier", "panted", "pantie", "pantos", "pantry", "panzer", "parcel", "pardie", "pardon", "parent", "pareos", "pareus", "parged", "parges", "parget", "pargos", "paries", "paring", "parish", "parity", "parked"};
+	const FString EasyHiddenWord[] = { "agio", "aims", "airs", "amir", "amis", "arms", "gams", "gars", "giro", "goas", "gram", 
+			"grim", "magi", "mags", "mair", "mars", "migs", "mirs",  "miso", "moas", "mogs", "mora", "mors", "oars", "ogam", 
+			"osar", "ragi", "rags", "rami", "rams", "rias", "rigs", "rims", "roam", "roms", "sago", "sari", "sima", "smog", 
+			"soar", "soma", "sora", "sori" };
+	const FString MediumHiddenWord[] = { "agios", "agism", "amigo", "amirs", "giros", "gismo", "grams", "imago", "mairs", "moira", 
+			"moras", "ogams", "ragis", "roams", "sigma", "simar", "dater", "dates", "datos", "datum", "daube", "daubs", "dauby", 
+			"daunt", "dauts", "daven", "davit", "dawen", "dawks", "dawns", "dawts", "dazes", "deair", "deals", "dealt", "deans", 
+			"dears", "deary", "deash", "death", "debar", "debit", "debts", "debug", "debut", "decaf", "decal", "decay", "decks", 
+			"decor", "decos", "decoy", "decry", "defat", "defis", "defog", "degas", "degum", "deify", "deign", "deils", "deism", 
+			"deist", "deity", "delay", "delfs", "delft", "delis", "delta", "delts", "demit" };
+	const FString HardHiddenWord[] = { "gambes", "gambir", "gambit", "gamble", "gambol", "gamely", "gamers", "gamest", "amier", 
+			"gamily", "gamine", "gamins", "gamuts", "gander", "ganefs", "ganevs", "ganofs", "ganoid", "gantry", "gaoled", "keblah", 
+			"kefirs", "kelims", "keloid", "kelson", "kelvin", "kenafs", "kendos", "kermis", "ketols", "kevils", "keying", "keypad", 
+			"paired", "palest", "palets", "palier", "paling", "palish", "palmed", "palmer", "palter", "paltry", "pander", "pandit", 
+			"panels", "panfry", "panful", "panged", "panics", "panier", "panted", "pantie", "pantos", "pantry", "panzer", "parcel", 
+			"pardie", "pardon", "parent", "pareos", "pareus", "parged", "parges", "parget", "pargos", "paries", "paring", "parish", 
+			"parity", "parked"};
 
 	if(Difficulty == 1)
 	{
