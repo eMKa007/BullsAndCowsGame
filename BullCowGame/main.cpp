@@ -5,10 +5,10 @@ user interaction. For game logic see FBullCowGame class.
 */
 
 #pragma once
-
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
+#include <time.h>
 
 // To make syntax Unreal friendly
 using FString = std::string;
@@ -19,10 +19,11 @@ void PlayGame();
 FString GetValidGuess();
 bool AskToPlayAgain();
 
-FBullCowGame BCGame;	// Instance of game
+FBullCowGame BCGame;// Instance of game
 
 int main( int argc, char* argv[])
 {
+	srand((unsigned int)time(NULL));	//initialize rand() function. 
 	do
 	{
 		PrintIntro();
@@ -30,8 +31,7 @@ int main( int argc, char* argv[])
 	} while (AskToPlayAgain());
 
 	std::cout << "\nFarewell Cowboy #Moo\n\n";
-
-	return 0; //exit the application
+	return 0;
 }
 
 void PrintIntro()
@@ -65,14 +65,15 @@ void PrintIntro()
 // plays a single game to complition.
 void PlayGame()
 {
+	BCGame.SerGameDifficulty();
 	BCGame.Reset();
-	int32 MaxTries = BCGame.GetMaxTries();
+
+	int32 MaxTries = BCGame.GetMaxTries(BCGame.GetHiddenWordLenght());
 
 	while( !BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries )
 	{
 		FString Guess = GetValidGuess();
 
-		//Submit Valid guess to the game, and recieve counts.
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
 
 		std::cout << "Bulls = " << BullCowCount.Bulls;
@@ -89,7 +90,7 @@ FString GetValidGuess()
 	FString Guess = "";
 	do
 	{
-		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries();
+		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries(BCGame.GetHiddenWordLenght());
 		std::cout << ". Type in Your guess: ";
 		
 		std::getline(std::cin, Guess);
@@ -116,9 +117,12 @@ FString GetValidGuess()
 
 bool AskToPlayAgain()
 {
-	std::cout << "\nDo You want to play again? :) [y/n]    ";
 	FString Response = "";
-	std::getline(std::cin, Response);
+	do
+	{
+		std::cout << "\nDo You want to play again? :) [y/n]    ";
+		std::getline(std::cin, Response);
+	} while (Response[0] != 'y' && Response[0] != 'n');
 
-	return (Response[0] == 'y') || (Response[0] == 'Y');
+	return (Response[0] == 'y');
 }

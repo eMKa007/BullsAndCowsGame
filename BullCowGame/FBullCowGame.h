@@ -1,4 +1,11 @@
 /*
+This file contains declarations of:
+	- FBullCowCount structure (used to count down bulls and cows)
+	- EGuessStatus enum class (used to check guess validity)
+	- FBullCowGame class (instance of game)
+*/
+
+/*
 The game logic (no view code or direct user interaction)
 The game is a simple guess the word based on Mastermind.
 This file include declarations of:
@@ -40,15 +47,18 @@ public:
 	int32 GetHiddenWordLenght() const;
 	EGuessStatus CheckGuessValidity(FString Guess) const ;
 	
-	int32 GetMaxTries() const;
+	int32 GetMaxTries(int32 WordLength) const;
+
+	void SerGameDifficulty();
 
 	void Reset();
 	
 	FBullCowCount SubmitValidGuess(FString Guess);
+
 	void PrintGameSummary();
 
 private:
-	int32 UserDefinedWordLength;
+	int32 Difficulty;
 	int32 MyCurrentTry;
 	FString MyHiddenWord;
 	bool bGameIsWon;

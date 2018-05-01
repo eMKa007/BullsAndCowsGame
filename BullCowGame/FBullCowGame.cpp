@@ -1,6 +1,10 @@
-#pragma once
+/*
+	Declarations of functions and methods defined here can be found in 
+	FBullCowGame.h file. 
+*/
 
 #include "FBullCowGame.h"
+#include <iostream>
 #include <map>
 
 // To make syntax Unreal friendly
@@ -13,17 +17,65 @@ int32 FBullCowGame::GetCurrentTry() const {	return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLenght() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
 
-int32 FBullCowGame::GetMaxTries() const 
+int32 FBullCowGame::GetMaxTries(int32 WordLength) const 
 {
-	TMap<int32, int32> WordLengthToMaxTries { {3,4}, {4,7}, {5,10}, {6,15}, {7, 20} };
-	return WordLengthToMaxTries[MyHiddenWord.length()];
+	TMap<int32, int32> WordLengthToMaxTries { {4,5}, {5,7}, {6,10}};
+	return WordLengthToMaxTries[WordLength];
 }
+
+void FBullCowGame::SerGameDifficulty()
+{
+	FString DifficultyChoose = "";
+	int32 Difficult = 0;
+	do
+	{
+		std::cout << "\nSet difficulty: <1-3>\n\t1- Easy (4 characters, 5 chances)\n\t2- Medium (5 characters, 7 chances)\n\t3- Hard (6 characters, 10 chances)\n";
+		std::getline(std::cin, DifficultyChoose);
+		
+		try
+		{
+			Difficult = std::stoi(DifficultyChoose);
+		}
+		catch (const std::invalid_argument ) 
+		{
+			std::cerr << "\nInvalid argument.";
+		}
+		catch ( const std::out_of_range )
+		{
+			std::cerr << "\nInserted value out of allowed range.";
+		}
+
+		if ( Difficult < 1 || Difficult > 3 )
+		{
+			std::cout << "\nPlease enter proper value between 1 and 3.. \n";
+		}
+
+	} while (Difficult < 1 || Difficult > 3);
+
+	FBullCowGame::Difficulty = Difficult;
+	return;
+}
+
 
 void FBullCowGame::Reset()
 {
-	const FString HIDDEN_WORD = "planet";	//this MUST be an isogram. 
-	MyHiddenWord = HIDDEN_WORD;
+	const FString EasyHiddenWord[] = { "agio", "aims", "airs", "amir", "amis", "arms", "gams", "gars", "giro", "goas", "gram", "grim", "magi", "mags", "mair", "mars", "migs", "mirs",  "miso", "moas", "mogs", "mora", "mors", "oars", "ogam", "osar", "ragi", "rags", "rami", "rams", "rias", "rigs", "rims", "roam", "roms", "sago", "sari", "sima", "smog", "soar", "soma", "sora", "sori" };
+	const FString MediumHiddenWord[] = { "agios", "agism", "amigo", "amirs", "giros", "gismo", "grams", "imago", "mairs", "moira", "moras", "ogams", "ragis", "roams", "sigma", "simar", "dater", "dates", "datos", "datum", "daube", "daubs", "dauby", "daunt", "dauts", "daven", "davit", "dawen", "dawks", "dawns", "dawts", "dazes", "deair", "deals", "dealt", "deans", "dears", "deary", "deash", "death", "debar", "debit", "debts", "debug", "debut", "decaf", "decal", "decay", "decks", "decor", "decos", "decoy", "decry", "defat", "defis", "defog", "degas", "degum", "deify", "deign", "deils", "deism", "deist", "deity", "delay", "delfs", "delft", "delis", "delta", "delts", "demit" };
+	const FString HardHiddenWord[] = { "gambes", "gambir", "gambit", "gamble", "gambol", "gamely", "gamers", "gamest", "amier", "gamily", "gamine", "gamins", "gamuts", "gander", "ganefs", "ganevs", "ganofs", "ganoid", "gantry", "gaoled", "keblah", "kefirs", "kelims", "keloid", "kelson", "kelvin", "kenafs", "kendos", "kermis", "ketols", "kevils", "keying", "keypad", "paired", "palest", "palets", "palier", "paling", "palish", "palmed", "palmer", "palter", "paltry", "pander", "pandit", "panels", "panfry", "panful", "panged", "panics", "panier", "panted", "pantie", "pantos", "pantry", "panzer", "parcel", "pardie", "pardon", "parent", "pareos", "pareus", "parged", "parges", "parget", "pargos", "paries", "paring", "parish", "parity", "parked"};
 
+	if(Difficulty == 1)
+	{
+		MyHiddenWord = EasyHiddenWord[rand() % ( sizeof(EasyHiddenWord)/sizeof(FString) ) ];
+	}
+	else if( Difficulty == 2)
+	{
+		MyHiddenWord = MediumHiddenWord[rand() % ( sizeof(MediumHiddenWord) / sizeof(FString) ) ];
+	}
+	else
+	{
+		MyHiddenWord = HardHiddenWord[rand() % ( sizeof(HardHiddenWord) / sizeof(FString) ) ];
+	}
+	
 	MyCurrentTry = 1;
 	bGameIsWon = false;
 	return;
@@ -41,21 +93,22 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 		return EGuessStatus::OK;
 }
 
-// Receives a VALID guess, increments turn, and returns count.
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
 	int32 WordLength = MyHiddenWord.length();
 
-	// loop through all letters in the guess
+	
 	for( int32 HiddenWordChar =0; HiddenWordChar< WordLength; HiddenWordChar++ )
 	{
+		// compare letters against the hidden word
 		for (int32 GuessChar = 0; GuessChar < WordLength; GuessChar++)
 		{
+			// if they match
 			if(Guess[GuessChar] == MyHiddenWord[HiddenWordChar])
 			{
-				if(HiddenWordChar == GuessChar)
+				if(HiddenWordChar == GuessChar)	//if they are in the same place
 				{
 					BullCowCount.Bulls++;
 					break;
@@ -78,11 +131,12 @@ void FBullCowGame::PrintGameSummary()
 {
 	if( bGameIsWon )
 	{
-		printf("Well done. You got it!\n");
+		std::cout << "\nWell done. You got it!\n";
 	}
 	else
 	{
-		printf("Mayby next time :) Keep going!\n");
+		std::cout << "\nMayby next time, Your hidden word was: \"" << MyHiddenWord << "\". Keep going! :)\n";
+		
 	}
 }
 
