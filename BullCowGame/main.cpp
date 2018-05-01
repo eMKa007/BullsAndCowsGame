@@ -4,9 +4,11 @@ This acts as the viev in a MVC pattern, and is responsible for
 user interaction. For game logic see FBullCowGame class.
 */
 
+#pragma once
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
+#include <time.h>
 
 using FString = std::string;
 using int32 = int;
@@ -16,18 +18,18 @@ void PlayGame();
 FString GetValidGuess();
 bool AskToPlayAgain();
 
-FBullCowGame BCGame;	// Instance of game
+FBullCowGame BCGame;// Instance of game
 
 int main( int argc, char* argv[])
 {
+	srand((unsigned int)time(NULL));	//initialize rand() function. 
 	do
 	{
 		PrintIntro();
 		PlayGame();
-	} while (AskToPlayAgain());	// (Response[0] == 'y') || (Response[0] == 'Y');
+	} while (AskToPlayAgain());
 
 	std::cout << "\nFarewell Cowboy #Moo\n\n";
-
 	return 0;
 }
 
@@ -52,8 +54,6 @@ void PrintIntro()
 	std::cout << "||            * Enter isogram word ( word without repeating letter ).     ||\n";
 	std::cout << "||            * Enter all lowercase word.                                 ||\n";
 	std::cout << "||                                                                        ||\n";
-	std::cout << "||   HINT: To change hidden word length type in:                          ||\n";
-	std::cout << "||                                change word <number_of_characters>      ||\n";
 	std::cout << "|} - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  {|\n";
 	std::cout << "\\\\                        G O O D   L U C K ! ! !                         //\n";
 	std::cout << " * ====================================================================== *\n";
@@ -63,16 +63,15 @@ void PrintIntro()
 
 void PlayGame()
 {
+	BCGame.SerGameDifficulty();
 	BCGame.Reset();
-	BCGame.SetUserWordLength();
 
-	int32 MaxTries = BCGame.GetMaxTries(BCGame.GetUserWordLength());
+	int32 MaxTries = BCGame.GetMaxTries(BCGame.GetHiddenWordLenght());
 
 	while( !BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries )
 	{
 		FString Guess = GetValidGuess();
 
-		//Submit Valid guess to the game, and recieve counts.
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
 
 		std::cout << "Bulls = " << BullCowCount.Bulls;
@@ -80,19 +79,16 @@ void PlayGame()
 	}
 	
 	BCGame.PrintGameSummary();
-
 	return;
 }
 
-// Loop continually until user gives a valid guess.
 FString GetValidGuess()
 {	
 	EGuessStatus Status = EGuessStatus::INVALID_STATUS;
 	FString Guess = "";
 	do
 	{
-		//Get Guess from the player.
-		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries(BCGame.GetUserWordLength());
+		std::cout << "\nTry " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries(BCGame.GetHiddenWordLenght());
 		std::cout << ". Type in Your guess: ";
 		
 		std::getline(std::cin, Guess);
@@ -120,10 +116,13 @@ FString GetValidGuess()
 
 bool AskToPlayAgain()
 {
-	std::cout << "\nDo You want to play again? :) [y/n]    ";
 	FString Response = "";
-	std::getline(std::cin, Response);
+	do
+	{
+		std::cout << "\nDo You want to play again? :) [y/n]    ";
+		std::getline(std::cin, Response);
+	} while (Response[0] != 'y' && Response[0] != 'n');
 
-	return (Response[0] == 'y') || (Response[0] == 'Y');
+	return (Response[0] == 'y');
 }
 

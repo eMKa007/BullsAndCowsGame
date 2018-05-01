@@ -1,3 +1,10 @@
+/*
+This file contains declarations of:
+	- FBullCowCount structure (used to count down bulls and cows)
+	- EGuessStatus enum class (used to check guess validity)
+	- FBullCowGame class (instance of game)
+*/
+
 #pragma once
 #include <string>
 
@@ -19,15 +26,6 @@ enum class EGuessStatus
 	Not_Lowercase,
 };
 
-enum class EGuessStatusMoja
-{
-	INVALID_STATUS,
-	OK,
-	Not_Isogram,
-	Wrong_Length,
-	Not_Lowercase,
-};
-
 class FBullCowGame
 {
 public:
@@ -40,16 +38,16 @@ public:
 	
 	int32 GetMaxTries(int32 WordLength) const;
 
-	void SetUserWordLength();
-	int32 GetUserWordLength() const;
+	void SerGameDifficulty();
 
 	void Reset();					// TODO, make a more rich return value
 	
 	FBullCowCount SubmitValidGuess(FString Guess);
+
 	void PrintGameSummary();
 
 private:
-	int32 UserDefinedWordLength;
+	int32 Difficulty;
 	int32 MyCurrentTry;
 	FString MyHiddenWord;
 	bool bGameIsWon;
