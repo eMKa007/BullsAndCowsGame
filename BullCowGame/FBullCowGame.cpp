@@ -23,36 +23,27 @@ int32 FBullCowGame::GetMaxTries(int32 WordLength) const
 	return WordLengthToMaxTries[WordLength];
 }
 
-void FBullCowGame::SerGameDifficulty()
+void FBullCowGame::SetGameDifficulty()
 {
-	FString DifficultyChoose = "";
-	int32 Difficult = 0;
-	do
+	int Difficulty;
+	std::cout << "\nSet difficulty: <1-3>\n\t1- Easy (4 characters, 5 chances)\n\t2- Medium (5 characters, 7 chances)\n\t3- Hard (6 characters, 10 chances)\n";
+
+	while ( !(std::cin >> Difficulty) || Difficulty < 1 || Difficulty > 3)
 	{
-		std::cout << "\nSet difficulty: <1-3>\n\t1- Easy (4 characters, 5 chances)\n\t2- Medium (5 characters, 7 chances)\n\t3- Hard (6 characters, 10 chances)\n";
-		std::getline(std::cin, DifficultyChoose);
-		
-		try
-		{
-			Difficult = std::stoi(DifficultyChoose);
-		}
-		catch (const std::invalid_argument ) 
-		{
-			std::cerr << "\nInvalid argument.";
-		}
-		catch ( const std::out_of_range )
-		{
-			std::cerr << "\nInserted value out of allowed range.";
-		}
+		std::cout << "Please enter a valid option (1-3)\n";
+		std::cin.clear();
+		std::cin.ignore();
+	}
+	std::cin.clear();
+	std::cin.ignore();
 
-		if ( Difficult < 1 || Difficult > 3 )
-		{
-			std::cout << "\nPlease enter proper value between 1 and 3.. \n";
-		}
+	if( Difficulty  == 1 )
+		FBullCowGame::Difficulty = EGameDifficulty::Easy;
+	else if ( Difficulty == 2 )
+		FBullCowGame::Difficulty = EGameDifficulty::Medium;
+	else
+		FBullCowGame::Difficulty = EGameDifficulty::Hard;
 
-	} while (Difficult < 1 || Difficult > 3);
-
-	FBullCowGame::Difficulty = Difficult;
 	return;
 }
 
@@ -77,11 +68,11 @@ void FBullCowGame::Reset()
 			"pardie", "pardon", "parent", "pareos", "pareus", "parged", "parges", "parget", "pargos", "paries", "paring", "parish", 
 			"parity", "parked"};
 
-	if(Difficulty == 1)
+	if(Difficulty == EGameDifficulty::Easy)
 	{
 		MyHiddenWord = EasyHiddenWord[rand() % ( sizeof(EasyHiddenWord)/sizeof(FString) ) ];
 	}
-	else if( Difficulty == 2)
+	else if( Difficulty == EGameDifficulty::Medium)
 	{
 		MyHiddenWord = MediumHiddenWord[rand() % ( sizeof(MediumHiddenWord) / sizeof(FString) ) ];
 	}

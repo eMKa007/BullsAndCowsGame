@@ -30,6 +30,13 @@ enum class EGuessStatus
 	Not_Lowercase,
 };
 
+enum class EGameDifficulty
+{
+	Easy,
+	Medium,
+	Hard,
+};
+
 class FBullCowGame
 {
 public:
@@ -42,7 +49,7 @@ public:
 	
 	int32 GetMaxTries(int32 WordLength) const;
 
-	void SerGameDifficulty();
+	void SetGameDifficulty();
 
 	void Reset();
 	
@@ -51,7 +58,7 @@ public:
 	void PrintGameSummary();
 
 private:
-	int32 Difficulty;
+	EGameDifficulty Difficulty;
 	int32 MyCurrentTry;
 	FString MyHiddenWord;
 	bool bGameIsWon;

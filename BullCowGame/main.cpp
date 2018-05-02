@@ -66,7 +66,7 @@ void PrintIntro()
 // plays a single game to complition.
 void PlayGame()
 {
-	BCGame.SerGameDifficulty();
+	BCGame.SetGameDifficulty();
 	BCGame.Reset();
 
 	int32 MaxTries = BCGame.GetMaxTries(BCGame.GetHiddenWordLenght());
