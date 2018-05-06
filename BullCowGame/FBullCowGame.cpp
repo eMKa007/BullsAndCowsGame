@@ -32,18 +32,18 @@ void FBullCowGame::SetGameDifficulty()
 	{
 		std::cout << "Please enter a valid option (1-3)\n";
 		std::cin.clear();
-		std::cin.ignore();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 	std::cin.clear();
-	std::cin.ignore();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-	if( Difficulty  == 1 )
-		FBullCowGame::Difficulty = EGameDifficulty::Easy;
-	else if ( Difficulty == 2 )
-		FBullCowGame::Difficulty = EGameDifficulty::Medium;
-	else
-		FBullCowGame::Difficulty = EGameDifficulty::Hard;
-
+	switch (Difficulty)
+	{
+		case 1: FBullCowGame::Difficulty = EGameDifficulty::Easy; break;
+		case 2: FBullCowGame::Difficulty = EGameDifficulty::Medium; break;
+		case 3: FBullCowGame::Difficulty = EGameDifficulty::Hard;
+		default: break;
+	}
 	return;
 }
 
